@@ -4,6 +4,7 @@ namespace Wise\GPSR\ApiAdmin\Dto\GpsrSupplier;
 
 use Wise\Core\Api\Attributes\OpenApi\EndpointElement as OA;
 use Wise\Core\Api\Dto\Attributes\FieldEntityMapping;
+use Wise\Core\Api\Fields\FieldHandlingEnum;
 use Wise\Core\ApiAdmin\Dto\CommonAdminApiDto;
 use Wise\Core\ApiAdmin\Dto\CommonDateInsertUpdateDtoTrait;
 use Wise\Core\Model\Address;
@@ -60,6 +61,13 @@ class GetGpsrSupplierDto extends CommonAdminApiDto
         description: 'Adres dostawcy'
     )]
     protected ?Address $address;
+
+    #[OA\Property(
+        description: 'Wyliczona jakość dostawcy',
+        example: 80,
+    )]
+    #[FieldEntityMapping(FieldHandlingEnum::HANDLE_ONLY_BY_FILL_RESPONSE_DTO)]
+    protected ?int $quality = null;
 
     public function getId(): ?string
     {
@@ -157,5 +165,15 @@ class GetGpsrSupplierDto extends CommonAdminApiDto
         return $this;
     }
 
+    public function getQuality(): ?int
+    {
+        return $this->quality;
+    }
 
+    public function setQuality(?int $quality): self
+    {
+        $this->quality = $quality;
+        
+        return $this;
+    }
 }
